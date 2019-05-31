@@ -41,6 +41,12 @@ public class TweetServiceImpl implements TweetService {
         
     }
 
+    public List<Tweet> search(String message, int page, int size) {
+        List<Tweet> feed = new ArrayList<>();
+        tweetRepository.findAllByMessageContainingOrderByCreateTimeDesc(message, PageRequest.of(page, size)).forEach(tweet -> feed.add(tweet));
+        return feed;
+    }
+
     public List<Tweet> getUserFeed(int userId, int page, int size) {
         List<Tweet> feed = new ArrayList<>();
         tweetRepository.findAllByOrderByCreateTimeDesc(PageRequest.of(page, size)).forEach(tweet -> {

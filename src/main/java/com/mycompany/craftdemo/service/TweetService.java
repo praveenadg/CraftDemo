@@ -21,6 +21,15 @@ public interface TweetService {
      List<Tweet> getAllFeed(int userId, int page, int size) ;
 
      /**
+      * Searches the given message in all tweets
+      * @param message
+      * @param page
+      * @param size
+      * @return
+      */
+     List<Tweet> search(String message, int page, int size) ;
+
+     /**
       * Returns the tweet y Id
       * @param id
       * @return
