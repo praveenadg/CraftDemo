@@ -15,11 +15,12 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    
+
     @Autowired
-    public UserServiceImpl(final UserRepository userRepository){
-        this.userRepository =userRepository;
+    public UserServiceImpl(final UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
+
     @Override
     public Optional<User> getUser(int userId) {
         return userRepository.findById(userId);
@@ -45,13 +46,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User delete(int id) {
         Optional<User> optionalUser = userRepository.findById(id);
-        if(!optionalUser.isPresent()){
-            throw new CraftDemoException( "user doesn't exist id : "+id);
+        if (!optionalUser.isPresent()) {
+            throw new CraftDemoException("user doesn't exist id : " + id);
         }
-        if(!optionalUser.get().isActive()){
-            throw new CraftDemoException( "User is already deleted : "+id);
+        if (!optionalUser.get().isActive()) {
+            throw new CraftDemoException("User is already deleted : " + id);
         }
-       User user = optionalUser.get();
+        User user = optionalUser.get();
         user.setActive(false);
         userRepository.save(user);
         return user;

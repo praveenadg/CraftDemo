@@ -32,7 +32,7 @@ public class FollowController {
     Logger logger = LoggerFactory.getLogger(FollowController.class);
 
     @PostMapping(produces = "application/json")
-    public User follow(@PathVariable("userId") int userId,
+    public String follow(@PathVariable("userId") int userId,
                        @RequestParam(name = "minorversion") String minorVersion, @RequestBody User user, @RequestParam(name = "opt") String operation) {
         logger.info("operation ="+operation);
         if(Operation.FOLLOW.name().equalsIgnoreCase(operation)){
@@ -42,7 +42,7 @@ public class FollowController {
         } else {//error
             throw new CraftDemoException("Invalid operation: "+operation); 
         }
-        return user;
+        return "Success";
     }
 
     @GetMapping(produces = "application/json")

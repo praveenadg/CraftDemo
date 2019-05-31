@@ -2,6 +2,7 @@ package com.mycompany.craftdemo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
@@ -12,7 +13,7 @@ import java.util.Date;
 public class Tweet {
     
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int tweetId;
     private String message;
     private int userId;

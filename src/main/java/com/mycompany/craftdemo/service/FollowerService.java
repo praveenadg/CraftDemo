@@ -8,7 +8,8 @@ public interface FollowerService {
 
     /**
      * follow the user.
-     * Throws error if both userId and following are same
+     * Throws error if both userId and following are same.
+     * Throws error if following user not found.
      * @param userId
      * @param following
      */
@@ -17,6 +18,7 @@ public interface FollowerService {
     /**
      * Unfollow the user.
      * Throws error if both userId and unFollowing are same
+     * Throws error if un-following user not found.
      * @param userId
      * @param unFollowing
      */

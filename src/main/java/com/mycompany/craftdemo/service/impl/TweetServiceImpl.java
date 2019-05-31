@@ -32,10 +32,9 @@ public class TweetServiceImpl implements TweetService {
         this.userService = userService;
     }
     
-
     public List<Tweet> getAllFeed(int userId, int page, int size) {
         List<Tweet> feed = new ArrayList<>();
-        List<Integer>  followingList = followerService.getFollowing(userId).stream().mapToInt(User::getUserId).boxed().collect(Collectors.toList());
+        List<Integer>  followingList = followerService.getFollowing(userId).stream().filter(user->user.isActive()).mapToInt(User::getUserId).boxed().collect(Collectors.toList());
         /// find by user id
         tweetRepository.findByUserIdIsInOrderByCreateTimeDesc(followingList, PageRequest.of(page, size)).forEach(tweet -> feed.add(tweet));
         return feed;
@@ -57,10 +56,17 @@ public class TweetServiceImpl implements TweetService {
     }
 
     public void saveOrUpdate(Tweet tweet, int userId) {
-        if(userId != tweet.getUserId() & tweet.getUserId() != 0){
-            throw new CraftDemoException("Tweet id : "+tweet.getTweetId() +"doesn't exist for user :"+userId);
+        //validate for create
+        if(userId != tweet.getUserId() && tweet.getUserId() != 0){
+            throw new CraftDemoException("Tweet id : "+tweet.getTweetId() +" doesn't exist for user : "+userId);
         }
+        //validate for update
+        tweetRepository.findById(tweet.getTweetId()).ifPresent(dbTweet -> {
+            if(dbTweet.getUserId() != userId){
+                throw new CraftDemoException("Tweet id : "+tweet.getTweetId() +" doesn't exist for user : "+userId); 
+            }});
         
+        //validate the user
         if(!userService.getUser(userId).isPresent()) {
             throw new CraftDemoException("User doesn't exist. UserId : "+userId);
         }
