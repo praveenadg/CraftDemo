@@ -1,0 +1,15 @@
+-- DROP TABLE IF EXISTS user;
+-- 
+-- CREATE TABLE user (
+--   USERID INT AUTO_INCREMENT  PRIMARY KEY,
+--   name VARCHAR(250) NOT NULL,
+--   age INT NOT NULL,
+-- );
+-- 
+-- DROP TABLE IF EXISTS tweet;
+-- 
+-- CREATE TABLE tweet (
+--                      TWEETID INT AUTO_INCREMENT  PRIMARY KEY,
+--                       message VARCHAR(250) NOT NULL,
+--                       USERID VARCHAR(250) NOT NULL,
+-- );
