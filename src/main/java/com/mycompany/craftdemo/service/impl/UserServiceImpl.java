@@ -43,6 +43,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * Validate user is present and active before marking inactive.
+     * @param id
+     * @return
+     */
     @Override
     public User delete(int id) {
         Optional<User> optionalUser = userRepository.findById(id);

@@ -48,13 +48,7 @@ public class TweetServiceImpl implements TweetService {
     }
 
     public List<Tweet> getUserFeed(int userId, int page, int size) {
-        List<Tweet> feed = new ArrayList<>();
-        tweetRepository.findAllByOrderByCreateTimeDesc(PageRequest.of(page, size)).forEach(tweet -> {
-            if (tweet.getUserId() == userId) {
-                feed.add(tweet);
-            }
-        });
-        return feed;
+        return tweetRepository.findAllByUserIdOrderByCreateTimeDesc(userId,PageRequest.of(page, size));
     }
 
     public Tweet getFeedById(int id) {
@@ -73,13 +67,19 @@ public class TweetServiceImpl implements TweetService {
             }});
         
         //validate the user
-        if(!userService.getUser(userId).isPresent()) {
+        Optional<User> optionalUser =userService.getUser(userId);
+        if(!optionalUser.isPresent() && !optionalUser.get().isActive()) {
             throw new CraftDemoException("User doesn't exist. UserId : "+userId);
         }
         tweet.setUserId(userId);
         return tweetRepository.save(tweet);
     }
 
+    /**
+     * Validate the tweet is present and tweet belongs to the user
+     * @param userId
+     * @param tweetId
+     */
     public void delete(int userId, int tweetId) {
         Optional<Tweet> tweet = tweetRepository.findById(tweetId);
         if(tweet.isPresent()){

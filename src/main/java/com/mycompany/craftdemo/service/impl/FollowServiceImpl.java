@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FollowServiceImpl implements FollowerService {
@@ -57,14 +58,23 @@ public class FollowServiceImpl implements FollowerService {
         
     }
 
+    /**
+     * Validates userId and followUnfollowId are not same.
+     * Validates the user present and active.
+     * Validates the followUnfollow user present and active.
+     * @param userId
+     * @param followUnfollowId
+     */
     private void validate(int userId, int followUnfollowId){
         if(userId == followUnfollowId){
             throw new CraftDemoException("User and follow/unfollow user cannot be same");
         }
-        if(!userRepository.findById(followUnfollowId).isPresent()){
+        Optional<User> optionalFollowUser =userRepository.findById(followUnfollowId);
+        if(!optionalFollowUser.isPresent() && !optionalFollowUser.get().isActive()){
             throw new CraftDemoException("User not found to follow/unfollow :" + followUnfollowId);
         }
-        if(!userRepository.findById(userId).isPresent()){
+        Optional<User> optionalUser =userRepository.findById(userId);
+        if(!optionalUser.isPresent() && !optionalUser.get().isActive()){
             throw new CraftDemoException(" user not found : " + userId);
         }
     }

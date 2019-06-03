@@ -62,6 +62,7 @@ public class User {
     @PrePersist
     private void prePersist() {
         this.createTime = new Date();
+        preUpdate();
     }
 
     public Date getUpdatedDate() {

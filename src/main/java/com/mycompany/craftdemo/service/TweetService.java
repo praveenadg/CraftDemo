@@ -30,7 +30,7 @@ public interface TweetService {
      List<Tweet> search(String message, int page, int size) ;
 
      /**
-      * Returns the tweet y Id
+      * Returns the tweet by Id
       * @param id
       * @return
       */
