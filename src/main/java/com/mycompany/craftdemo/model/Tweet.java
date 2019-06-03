@@ -1,5 +1,8 @@
 package com.mycompany.craftdemo.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
@@ -17,8 +22,12 @@ public class Tweet {
     private int tweetId;
     private String message;
     private int userId;
+    //@CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
-    private Date updatedDate;
+    //@UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updateTime;
 
     protected Tweet() {}
 
@@ -53,18 +62,26 @@ public class Tweet {
     @PrePersist
     private void prePersist() {
         this.createTime = new Date();
+        preUpdate();
     }
 
-    public Date getUpdatedDate() {
-        return updatedDate;
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime= updateTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime= createTime;
     }
     @PreUpdate
     private void preUpdate() {
-        this.updatedDate = new Date();
+        this.updateTime = new Date();
     }
     @PreRemove
     protected void preRemove() {
-        this.updatedDate = new Date();
+        this.updateTime = new Date();
     }
     
 }

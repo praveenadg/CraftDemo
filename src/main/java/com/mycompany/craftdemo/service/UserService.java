@@ -17,7 +17,7 @@ public interface UserService {
      * Create or update a used based on Id
      * @param user
      */
-    void saveOrUpdate(User user);
+    User saveOrUpdate(User user);
 
     /**
      * Delete a user by id

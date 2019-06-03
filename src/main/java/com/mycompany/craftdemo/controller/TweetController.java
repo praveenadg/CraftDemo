@@ -38,8 +38,7 @@ public class TweetController {
                         @RequestParam(name = "minorversion") String minorVersion,
                         @RequestBody Tweet tweet) {
 
-        tweetService.saveOrUpdate(tweet, userId);
-        return tweet;
+        return tweetService.saveOrUpdate(tweet, userId);
     }
 
     @DeleteMapping(path = "/{tweetId}", produces = "application/json")

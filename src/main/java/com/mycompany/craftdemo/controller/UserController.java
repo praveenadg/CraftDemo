@@ -39,7 +39,6 @@ public class UserController {
     @PutMapping(produces = "application/json")
     public User update(@RequestParam(name = "minorversion") String minorVersion,
                        @RequestBody User user) {
-        userService.saveOrUpdate(user);
-        return user;
+        return userService.saveOrUpdate(user);
     }
 }

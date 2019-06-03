@@ -61,9 +61,9 @@ public class TweetServiceImpl implements TweetService {
         return tweetRepository.findById(id).get();
     }
 
-    public void saveOrUpdate(Tweet tweet, int userId) {
+    public Tweet saveOrUpdate(Tweet tweet, int userId) {
         //validate for create
-        if(userId != tweet.getUserId() && tweet.getUserId() != 0){
+        if(tweet.getUserId() != 0 && userId != tweet.getUserId()){
             throw new CraftDemoException("Tweet id : "+tweet.getTweetId() +" doesn't exist for user : "+userId);
         }
         //validate for update
@@ -77,7 +77,7 @@ public class TweetServiceImpl implements TweetService {
             throw new CraftDemoException("User doesn't exist. UserId : "+userId);
         }
         tweet.setUserId(userId);
-        tweetRepository.save(tweet);
+        return tweetRepository.save(tweet);
     }
 
     public void delete(int userId, int tweetId) {

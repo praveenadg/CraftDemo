@@ -41,7 +41,7 @@ public interface TweetService {
       * @param tweet
       * @param userId
       */
-     void saveOrUpdate(Tweet tweet, int userId) ;
+     Tweet saveOrUpdate(Tweet tweet, int userId) ;
 
      /**
       * 
